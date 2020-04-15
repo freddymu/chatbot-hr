@@ -1,12 +1,18 @@
-var express = require("express");
-var router = express.Router();
-var {
+const express = require("express");
+const router = express.Router();
+
+const {
     dialogFlowComponent,
     sendTermination,
 } = require("../components/dialogflow/index");
 
 /* POST from dialogflow. */
 router.post("/", function (req, res, next) {
+    // console.log(
+    //     "Dialogflow Request headers: " + JSON.stringify(req.headers)
+    // );
+    // console.log("Dialogflow Request body: " + JSON.stringify(res.body));
+
     dialogFlowComponent(req, res);
 });
 

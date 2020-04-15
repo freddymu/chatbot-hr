@@ -8,23 +8,25 @@ const axios = require("axios").default;
 
 const welcomeIntentHandler = require("./intents/welcome");
 const fallbackIntentHandler = require("./intents/fallback");
+const timeoffIntentHandler = require("./intents/timeoff");
 const resignationIntentHandler = require("./intents/resignation");
+const terminationIntentHandler = require("./intents/termination");
 
 //process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 
 const dialogFlowComponent = (request, response) => {
     const agent = new WebhookClient({ request, response });
 
-    // console.log(
-    //     "Dialogflow Request headers: " + JSON.stringify(request.headers)
-    // );
-    // console.log("Dialogflow Request body: " + JSON.stringify(request.body));
-
     // Run the proper function handler based on the matched Dialogflow intent name
     let intentMap = new Map();
+
     intentMap.set("Default Welcome Intent", welcomeIntentHandler);
     intentMap.set("Default Fallback Intent", fallbackIntentHandler);
+
+    intentMap.set("skill_1-pengajuan_cuti", timeoffIntentHandler);
     intentMap.set("skill_2-pengunduran_diri", resignationIntentHandler);
+    intentMap.set("skill_3-pemberhentian_kerja", terminationIntentHandler);
+
     agent.handleRequest(intentMap);
 };
 
