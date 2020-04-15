@@ -1,50 +1,34 @@
-// See https://github.com/dialogflow/dialogflow-fulfillment-nodejs
-// for Dialogflow fulfillment library docs, samples, and to report issues
-("use strict");
+var createError = require("http-errors");
+var express = require("express");
+var path = require("path");
+var cookieParser = require("cookie-parser");
+var logger = require("morgan");
 
-const { WebhookClient } = require("dialogflow-fulfillment");
-const { Card, Suggestion } = require("dialogflow-fulfillment");
-const express = require("express");
-const bodyParser = require("body-parser");
+var dialogflowRouter = require("./routes/dialogflow");
 
-//process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
+var app = express();
 
-const app = express();
-const port = 3000;
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/dialogflow", dialogflowRouter);
 
-app.post("/", (request, response) => {
-    const agent = new WebhookClient({ request, response });
-
-    //console.log(agent);
-    //console.log(agent.consoleMessages[0].text);
-
-    // console.log(
-    //     "Dialogflow Request headers: " + JSON.stringify(request.headers)
-    // );
-    // console.log("Dialogflow Request body: " + JSON.stringify(request.body));
-
-    function welcome(agent) {
-        agent.add(`Welcome to my agent!`);
-    }
-
-    function fallback(agent) {
-        agent.add(`I didn't understand`);
-        agent.add(`I'm sorry, can you try again?`);
-        agent.add(agent.consoleMessages[0].text);
-    }
-
-    // Run the proper function handler based on the matched Dialogflow intent name
-    let intentMap = new Map();
-    intentMap.set("Default Welcome Intent", welcome);
-    intentMap.set("Default Fallback Intent", fallback);
-    // intentMap.set('your intent name here', yourFunctionHandler);
-    // intentMap.set('your intent name here', googleAssistantHandler);
-    agent.handleRequest(intentMap);
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 
-app.listen(port, () =>
-    console.log(`Example app listening at http://localhost:${port}`)
-);
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error");
+});
+
+module.exports = app;
