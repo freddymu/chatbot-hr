@@ -517,6 +517,32 @@ const databaseHR = {
         db.close();
         return response;
     },
+
+    getTeminatedEmployees: async function () {
+        let response = {
+            success: false,
+            message: null,
+            data: null,
+        };
+
+        let db = await this.openConnection();
+        let terminatedEmployees = await db.all(
+            "SELECT * FROM employees WHERE status = ? AND facebook_id IS NOT NULL",
+            ["terminate"]
+        );
+        db.close();
+
+        if (terminatedEmployees) {
+            response.success = true;
+            response.message = "Pegawai ditemukan";
+            response.data = terminatedEmployees;
+        } else {
+            response.message =
+                "Tidak menemukan pegawai dengan status terminate";
+        }
+
+        return response;
+    },
 };
 
 module.exports = databaseHR;

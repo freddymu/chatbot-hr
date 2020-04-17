@@ -17,12 +17,15 @@ const {
 const {
     terminationHandler,
     terminationReasonHandler,
+    terminationOptionHandler,
 } = require("./intents/termination");
 
 //process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 
 const dialogFlowComponent = (request, response) => {
     const agent = new WebhookClient({ request, response });
+
+    //console.log(agent);
 
     // Run the proper function handler based on the matched Dialogflow intent name
     let intentMap = new Map();
@@ -44,57 +47,76 @@ const dialogFlowComponent = (request, response) => {
         "skill_4-pemberhentian_pegawai.alasan",
         terminationReasonHandler
     );
-    intentMap.set("skill_4-pemberhentian_pegawai.pilihan", terminationOptionHandler);
+    intentMap.set(
+        "skill_4-pemberhentian_pegawai.pilihan",
+        terminationOptionHandler
+    );
 
     agent.handleRequest(intentMap);
 };
 
-const sendTermination = () => {
+const sendTermination = async () => {
+    const databaseHR = require("../database/index");
+
     // get all employees that has status terminate and has facebook id
+    const employees = await databaseHR.getTeminatedEmployees();
+
     // sent this message to each employee
+    if (employees.success === false) {
+        console.log(employees.message);
+        return;
+    }
 
-    let headers = {
-        "Content-Type": "application/json",
-    };
+    let facebookPageAccessToken =
+        "EAADccQfNIgUBAHh2LVuiUsvq81dxRllqHkuZCrI8VKsGvI1ukeivSRh1ZAi0X35dXKK9Y18HN3N2W5sRa76JfvmOPMXl7J97CGk1nStQNWoctuHlaeOroN3dZAGUTTQae8W9Jr9KqaFQ3YqsMjX5D2UAtCvjrZBHzlgaVszupZBg4rq4pbhHWZBP8pQdjz6x0ZD";
 
-    let url =
-        "https://graph.facebook.com/v6.0/me/messages?access_token=EAALd6kPO1U4BADwUobwgkg6ZA1CZChWYKNQiv9hE1qihEi2cqJAYdBQcEZCa4tWUAdYLunrMKTTKxLXVyFDGycukw82imSOYPDKpJBLZBtCKmaZAHBuXejAs3kmZA2skYF7pmhLdsky5bUKqVLFQ0AnuVV7UudVi3PFNOvVK1AjfuGDTxZB63CZAdNfivXNI4IYZD";
-    let body = {
-        messaging_type: "MESSAGE_TAG",
-        tag: "ACCOUNT_UPDATE",
-        recipient: {
-            id: "2679337955494704",
-        },
-        message: {
-            text:
-                "Maaf, saya ingin memberikan kabar yang tidak enak terkait dengan status kepegawaian Anda diperusahaan.\n\nDikarenakan ada beberapa kondisi\nPerusahaan memutuskan untuk memberhentikan Anda.",
-            quick_replies: [
-                {
-                    content_type: "text",
-                    title: "Diskusi lebih lanjut",
-                    payload: "termination",
-                    image_url:
-                        "https://www.pngitem.com/pimgs/m/29-297416_folded-hands-icon-praying-hands-emoji-png-transparent.png",
-                },
-                {
-                    content_type: "text",
-                    title: "Saya tidak paham",
-                    payload: "termination",
-                    image_url:
-                        "https://www.pngitem.com/pimgs/m/85-858467_transparent-shocked-emoji-png-emoji-confused-png-png.png",
-                },
-            ],
-        },
-    };
+    console.log(employees);
 
-    axios
-        .post(url, body, headers)
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    employees.data.forEach((row) => {
+        let facebookid = row.facebook_id;
+
+        let headers = {
+            "Content-Type": "application/json",
+        };
+
+        let url = `https://graph.facebook.com/v6.0/me/messages?access_token=${facebookPageAccessToken}`;
+        let body = {
+            messaging_type: "MESSAGE_TAG",
+            tag: "ACCOUNT_UPDATE",
+            recipient: {
+                id: facebookid,
+            },
+            message: {
+                text:
+                    "Maaf, saya ingin memberikan kabar yang tidak enak terkait dengan status kepegawaian Anda diperusahaan.\n\nDikarenakan ada beberapa kondisi\nPerusahaan memutuskan untuk memberhentikan Anda.",
+                quick_replies: [
+                    {
+                        content_type: "text",
+                        title: "Diskusi lebih lanjut",
+                        payload: "termination",
+                        image_url:
+                            "https://www.pngitem.com/pimgs/m/29-297416_folded-hands-icon-praying-hands-emoji-png-transparent.png",
+                    },
+                    {
+                        content_type: "text",
+                        title: "Saya tidak paham",
+                        payload: "termination",
+                        image_url:
+                            "https://www.pngitem.com/pimgs/m/85-858467_transparent-shocked-emoji-png-emoji-confused-png-png.png",
+                    },
+                ],
+            },
+        };
+
+        axios
+            .post(url, body, headers)
+            .then(function (response) {
+                //console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
 };
 
 module.exports = { dialogFlowComponent, sendTermination };
