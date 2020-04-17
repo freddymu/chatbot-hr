@@ -8,9 +8,16 @@ const axios = require("axios").default;
 
 const welcomeIntentHandler = require("./intents/welcome");
 const fallbackIntentHandler = require("./intents/fallback");
+const verificationIntentHandler = require("./intents/verification");
 const timeoffIntentHandler = require("./intents/timeoff");
-const resignationIntentHandler = require("./intents/resignation");
-const terminationIntentHandler = require("./intents/termination");
+const {
+    resignationConfirmHandler,
+    resignationHandler,
+} = require("./intents/resignation");
+const {
+    terminationHandler,
+    terminationReasonHandler,
+} = require("./intents/termination");
 
 //process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 
@@ -23,14 +30,29 @@ const dialogFlowComponent = (request, response) => {
     intentMap.set("Default Welcome Intent", welcomeIntentHandler);
     intentMap.set("Default Fallback Intent", fallbackIntentHandler);
 
-    intentMap.set("skill_1-pengajuan_cuti", timeoffIntentHandler);
-    intentMap.set("skill_2-pengunduran_diri", resignationIntentHandler);
-    intentMap.set("skill_3-pemberhentian_kerja", terminationIntentHandler);
+    intentMap.set("skill_1-verifikasi", verificationIntentHandler);
+    intentMap.set("skill_2-pengajuan_cuti - yes", timeoffIntentHandler);
+
+    intentMap.set("skill_3-pengunduran_diri - yes", resignationHandler);
+    intentMap.set(
+        "skill_3-pengunduran_diri.penawaran-no",
+        resignationConfirmHandler
+    );
+
+    intentMap.set("skill_4-pemberhentian_pegawai", terminationHandler);
+    intentMap.set(
+        "skill_4-pemberhentian_pegawai.alasan",
+        terminationReasonHandler
+    );
+    intentMap.set("skill_4-pemberhentian_pegawai.pilihan", terminationOptionHandler);
 
     agent.handleRequest(intentMap);
 };
 
 const sendTermination = () => {
+    // get all employees that has status terminate and has facebook id
+    // sent this message to each employee
+
     let headers = {
         "Content-Type": "application/json",
     };
