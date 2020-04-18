@@ -1,5 +1,5 @@
 const databaseHR = require("../../database/index");
-const { Image } = require("dialogflow-fulfillment");
+const { Image, Suggestion, Payload } = require("dialogflow-fulfillment");
 
 const resignationHandler = async (agent) => {
     let reason = agent.contexts[0].parameters.resign_reason;
@@ -45,8 +45,28 @@ const resignationHandler = async (agent) => {
             "Jadi menurut saya sangat disayangkan jika Anda mengundurkan diri saat ini"
         );
         agent.add(
-            "Bagaimana kalau saya buatkan jadwal untuk ketemu dengan manajemen supaya Anda bisa negosiasi terkait kebutuhan Anda. Bersedia kah?"
+            "Bagaimana kalau saya buatkan jadwal untuk ketemu dengan manajemen supaya Anda bisa negosiasi terkait kebutuhan Anda."
         );
+        agent.add("Bersedia kah?");
+        agent.add(new Suggestion("Ok, saya coba deh"));
+        agent.add(new Suggestion("Tidak perlu"));
+
+        // let customPayload = new Payload(agent.FACEBOOK, {
+        //     title: "Bersedia kah?",
+        //     quick_replies: [
+        //         {
+        //             content_type: "ok, saya coba deh",
+        //             title: "Ok, saya coba deh",
+        //             payload: "ok, saya coba deh",
+        //         },
+        //         {
+        //             content_type: "tidak usah",
+        //             title: "Tidak usah",
+        //             payload: "tidak usah",
+        //         },
+        //     ],
+        // });
+        //agent.add(customPayload);
 
         // sent image
         //agent.add();
