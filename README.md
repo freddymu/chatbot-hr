@@ -29,5 +29,5 @@
 
 ## Diskusi Lebih Lanjut
 
-- Grup Telegram Public Chatbot Developer Indonesia https://t.me/chatbotdev_id
+- Grup Telegram Public Chatbot Developer Indonesia [https://t.me/chatbotdev_id](https://t.me/chatbotdev_id)
 - Mari ramaikan perkembangan Chatbot di Indonesia
