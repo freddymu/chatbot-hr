@@ -26,3 +26,8 @@
 - Untuk setiap intent yang di aktifkan fulfillment nya, maka Dialogflow akan mengirimkan POST http request ke endpoint yang sudah diset di halaman Webhook
 - ![Mengaktfikan Fulfillment pada intent](.material/screenshot/fulfillment_enable.png)
 - Buka web Facebook messenger [https://messenger.com](https://messenger.com) untuk menguji integrasi chatbot
+
+## Diskusi Lebih Lanjut
+
+- Grup Telegram Public Chatbot Developer Indonesia https://t.me/chatbotdev_id
+- Mari ramaikan perkembangan Chatbot di Indonesia
