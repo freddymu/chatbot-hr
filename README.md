@@ -30,7 +30,7 @@
 
 ### Skill Chatbot #4: Informasi pemberhentian kerja pegawai dengan status "terminate" melalui Push Message / Direct Message via API Facebook
 
-![Chatbot_Skill_4_pemberhentian_kerja](.material/screenshot/chatbot-pengunduran-diri-1.gif)
+![Chatbot_Skill_4_pemberhentian_kerja](.material/screenshot/chatbot-pemberhentian-kerja.gif)
 
 ### Melihat jejak HTTP request dan HTTP response antara Node JS dengan Dialogflow
 
