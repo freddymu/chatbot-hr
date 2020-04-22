@@ -3,8 +3,8 @@
 ## Tujuan
 
 - Memahami manfaat chatbot khususnya dalam mendukung aktifitas HR
-- Membuat 3 skill chatbot HR yaitu pengajuan cuti, pengajuan pengunduran diri dan pemberhentian kerja
-- Memahami cara kerja chatbot dibalik layar
+- Membuat 4 skill chatbot HR yaitu verifikasi pegawai, pengajuan cuti, pengajuan pengunduran diri dan pemberhentian kerja
+- Memahami cara kerja chatbot dibalik layar, komunikasi antara Dialogflow, HTTP API dan database
 
 ## Apa Yang Kamu Pelajari
 
