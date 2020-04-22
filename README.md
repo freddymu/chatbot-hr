@@ -61,6 +61,11 @@
 - ![Mengaktfikan Fulfillment pada intent](.material/screenshot/fulfillment_enable.png)
 - Buka web Facebook messenger [https://messenger.com](https://messenger.com) untuk menguji integrasi chatbot
 
+## Catatan
+
+- Konten lokakarya tersebut diambil sebagian dari e-Book [Chatbot HR Dan Masa Depan Manajemen Sumber Daya Manusia](https://karyakarsa.com/freddymu/chatbot-hr-masa-depan-manajemen-sumber-daya-manusia)
+- Ingin lebih banyak mengembangkan skill chatbot HR lainnya, dukung aktifitas saya di [https://karyakarsa.com/freddymu](https://karyakarsa.com/freddymu)
+
 ## Diskusi Lebih Lanjut
 
 - Grup Telegram Public Chatbot Developer Indonesia [https://t.me/chatbotdev_id](https://t.me/chatbotdev_id)
