@@ -66,7 +66,3 @@
 - Konten lokakarya tersebut diambil sebagian dari e-Book [Chatbot HR Dan Masa Depan Manajemen Sumber Daya Manusia](https://karyakarsa.com/freddymu/chatbot-hr-masa-depan-manajemen-sumber-daya-manusia)
 - Ingin lebih banyak mengembangkan skill chatbot HR lainnya, dukung aktifitas saya di [https://karyakarsa.com/freddymu](https://karyakarsa.com/freddymu)
 
-## Diskusi Lebih Lanjut
-
-- Grup Telegram Public Chatbot Developer Indonesia [https://t.me/chatbotdev_id](https://t.me/chatbotdev_id)
-- Mari ramaikan perkembangan Chatbot di Indonesia
