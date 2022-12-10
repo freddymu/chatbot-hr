@@ -12,7 +12,7 @@
     "debug": "~2.6.9",
     "dialogflow": "^1.2.0",
     "dialogflow-fulfillment": "^0.6.1",
-    "express": "~4.16.1",
+    "express": "~4.17.3",
     "faker": "^4.1.0",
     "http-errors": "~1.6.3",
     "moment": "^2.24.0",
